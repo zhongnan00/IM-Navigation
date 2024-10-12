@@ -19,4 +19,5 @@ cp build_linux_ubuntu/build_linux_ubuntu_output.txt build_output/build_results/x
 
 mkdir -p build_output/app/x86
 
-cp ./build_linux_ubuntu/app/test/hello_world build_output/app/x86/
+cp ./build_linux_ubuntu/app/test/hello_world    build_output/app/x86/
+cp ./build_linux_ubuntu/app/demos/ReadSTL       build_output/app/x86/

@@ -10,6 +10,10 @@ set(CMAKE_BUILD_TYPE debug)
 
 include_directories(.)
 
-find_package(VTK 9.2 REQUIRED)
+find_package(VTK REQUIRED)
+if (NOT VTK_FOUND)
+  message(FATAL_ERROR "Unable to find the VTK build folder.")
+endif()
 
 add_subdirectory(app/test)
+add_subdirectory(app/demos)
