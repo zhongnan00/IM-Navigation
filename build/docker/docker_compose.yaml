@@ -1,7 +1,7 @@
 version: "3.0"
 
 services:
-  icp:
+  IMNAV:
     image: imnavigation:latest
     restart: always
     tty: true
