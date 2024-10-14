@@ -1,0 +1,9 @@
+version: "3.0"
+
+services:
+  icp:
+    image: imnavigation:latest
+    restart: always
+    tty: true
+    volumes:
+      - /home/liuchao/workspace:/home/repo
