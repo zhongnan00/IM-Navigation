@@ -17,6 +17,8 @@ RUN apt install -y dos2unix
 RUN apt update
 RUN apt install -y libzmq3-dev
 RUN apt install -y libssl-dev
+RUN apt-get install libgl1-mesa-dev libglu1-mesa-dev freeglut3-dev mesa-common-dev
+
 
 RUN mkdir -p /home/lib/gtest &&\
 	cd /home/lib/gtest &&\
@@ -31,4 +33,13 @@ RUN mkdir -p /home/lib/gtest &&\
 	rm -rf /home/lib/gtest
 
 
-    
+# download vtk
+RUN mkdir -p /home/lib/vtk &&\
+	cd /home/lib/vtk &&\
+	wget https://github.com/Kitware/VTK/archive/refs/tags/v9.2.6.tar.gz &&\
+	tar zxvf v9.2.6.tar.gz &&\
+	cd VTK-9.2.6/ && \
+	mkdir build &&\
+	cd build &&\
+	cmake .. &&\
+	make 

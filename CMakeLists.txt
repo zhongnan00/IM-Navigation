@@ -10,10 +10,10 @@ set(CMAKE_BUILD_TYPE debug)
 
 include_directories(.)
 
-# find_package(VTK REQUIRED)
-# if (NOT VTK_FOUND)
-#   message(FATAL_ERROR "Unable to find the VTK build folder.")
-# endif()
+find_package(VTK REQUIRED)
+if (NOT VTK_FOUND)
+  message(FATAL_ERROR "Unable to find the VTK build folder.")
+endif()
 
 add_subdirectory(app/test)
-# add_subdirectory(app/demos)
+add_subdirectory(app/demos)

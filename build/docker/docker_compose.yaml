@@ -1,9 +1,9 @@
 version: "3.0"
 
 services:
-  IMNAV:
-    image: imnavigation:latest
+  nimnavigation:
+    image: nimnavigation:latest
     restart: always
     tty: true
     volumes:
-      - /home/liuchao/workspace:/home/repo
+      - /home/liuchao/workspace/NIM-Navigation:/home/repo
