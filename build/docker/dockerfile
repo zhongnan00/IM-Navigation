@@ -42,4 +42,5 @@ RUN mkdir -p /home/lib/vtk &&\
 	mkdir build &&\
 	cd build &&\
 	cmake .. &&\
-	make 
+	make &&\
+	make install

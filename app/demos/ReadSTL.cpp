@@ -25,6 +25,7 @@
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderer.h>
+#include <vtkInteractorStyleTrackballCamera.h>
 
 void test_cone(){
     //
@@ -124,13 +125,17 @@ int test_stl(std::string filename){
     renderWindow->AddRenderer(renderer);
     vtkSmartPointer<vtkRenderWindowInteractor> renderWindowInteractor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
     renderWindowInteractor->SetRenderWindow(renderWindow);
+    vtkNew<vtkInteractorStyleTrackballCamera> style;
+    renderWindowInteractor->SetInteractorStyle(style);
+
 
     // Add the actor to the scene
     renderer->AddActor(actor);
     renderer->SetBackground(0.1, 0.1, 0.1); // Background color dark gray
 
     // Render and interact
-    renderWindow->Render();
+    // renderWindow->Render();
+    renderWindowInteractor->Initialize();
     renderWindowInteractor->Start();
 
     return EXIT_SUCCESS;
