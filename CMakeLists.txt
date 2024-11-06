@@ -17,3 +17,4 @@ endif()
 
 add_subdirectory(app/test)
 add_subdirectory(app/demos)
+add_subdirectory(app/CombinedAPI/library)
