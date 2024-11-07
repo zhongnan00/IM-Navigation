@@ -1,5 +1,7 @@
 FROM ubuntu:20.04
 
+## x86 linux environment
+
 RUN apt update
 RUN apt install
 
@@ -44,3 +46,37 @@ RUN mkdir -p /home/lib/vtk &&\
 	cmake .. &&\
 	make &&\
 	make install
+
+
+## aarch64 linux build environment
+
+#linaro-aarch64
+RUN mkdir -p /home/compiler/arm-gcc &&\
+	cd /home/compiler/arm-gcc &&\
+	wget https://releases.linaro.org/components/toolchain/binaries/7.5-2019.12/aarch64-linux-gnu/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz --no-check-certificate &&\
+	tar xf gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz &&\
+	mv gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu /opt/ &&\
+	rm -rf /home/compiler
+
+RUN mkdir -p /home/lib/gtest &&\
+	cd /home/lib/gtest &&\
+	wget https://github.com/google/googletest/archive/release-1.8.0.tar.gz &&\
+	tar zxvf release-1.8.0.tar.gz &&\
+	cd googletest-release-1.8.0/ &&\
+	touch aarch64_linux.cmake &&\
+	echo "set(AARCH_64_C  /opt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/bin)">>aarch64_linux.cmake &&\
+	echo "set(CMAKE_C_COMPILER     \${AARCH_64_C}/aarch64-linux-gnu-gcc)">>aarch64_linux.cmake &&\
+	echo "set(CMAKE_CXX_COMPILER     \${AARCH_64_C}/aarch64-linux-gnu-g++)">>aarch64_linux.cmake &&\
+	echo "set(AS     \${AARCH_64_C}/aarch64-linux-gnu-as)">>aarch64_linux.cmake &&\
+	echo "set(AR     \${AARCH_64_C}/aarch64-linux-gnu-ar)">>aarch64_linux.cmake &&\
+	echo "set(OBJCOPY     \${AARCH_64_C}/aarch64-linux-gnu-objcopy)">>aarch64_linux.cmake &&\
+	echo "set(OBJDUMP     \${AARCH_64_C}/aarch64-linux-gnu-objdump)">>aarch64_linux.cmake &&\
+	echo "set(SIZE     \${AARCH_64_C}/aarch64-linux-gnu-size)">>aarch64_linux.cmake &&\
+	cmake -Bbuild_aarch64_linux -DCMAKE_INSTALL_PREFIX=./build_aarch64_linux \
+	-DCMAKE_TOOLCHAIN_FILE=aarch64_linux.cmake -DENABLE_CURVE=OFF -Wno-dev . &&\
+	cmake --build build_aarch64_linux/ &&\
+	cp -r googletest/include/* /opt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/include/ &&\
+	cp -r build_aarch64_linux/googlemock/gtest/* /opt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu/aarch64-linux-gnu/lib &&\
+	cd &&\
+	rm -rf /home/lib/gtest
+

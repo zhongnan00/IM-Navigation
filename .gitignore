@@ -1,2 +1,4 @@
 build_linux_ubuntu/*
 build_output/*
+build_aarch64_linux/*
+build_ubuntu_linux/*
